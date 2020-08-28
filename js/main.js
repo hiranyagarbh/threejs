@@ -21,20 +21,25 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 })
 
+// add sphere
 // def shape and material
-var geometry = new THREE.SphereGeometry(1,10,10);
-var material = new THREE.MeshLambertMaterial({color: 0x266CAA});
-// shape + material
-var mesh = new THREE.Mesh(geometry, material);
+
+var sphere_geometry = new THREE.SphereGeometry(1,50,50); // shape
+var sp_material = new THREE.MeshLambertMaterial({color: 0x266CAA}); // material
+var sp_mesh = new THREE.Mesh(sphere_geometry, sp_material); // shape + material
+
+// add box
+var box_geometry = new THREE.BoxGeometry(1,1,1);
+var box_mesh = new THREE.Mesh(box_geometry, sp_material);
+
 
 // add light
 var light = new THREE.PointLight(0XFFFFFF, 1.75, 500);
-// set light x,y,z cordinates
-light.position.set(10,0,25)
-scene.add(light);
+light.position.set(10,0,25) // set light x,y,z cordinates
 
-// add mesh to the scene
-scene.add(mesh);
+
+// add mesh and light to the scene
+scene.add(box_mesh, light);
 
 // render method on scene and camera
 renderer.render(scene,camera);
