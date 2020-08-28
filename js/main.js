@@ -36,6 +36,9 @@ var box_mesh = new THREE.Mesh(box_geometry, sp_material);
 box_mesh.position.set(2,2,-2); // shorthand
 /* box_mesh.position.x = -2; box_mesh.position.y = 2; box_mesh.position.z = 2; */
 
+// rotate mesh
+box_mesh.rotation.set(45,0,0)
+
 // add light
 var light = new THREE.PointLight(0XFFFFFF, 1.75, 500);
 light.position.set(10,0,25) // set light x,y,z cordinates
