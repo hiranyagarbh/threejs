@@ -32,13 +32,6 @@ var sp_mesh = new THREE.Mesh(sphere_geometry, sp_material); // shape + material
 var box_geometry = new THREE.BoxGeometry(1,1,1);
 var box_mesh = new THREE.Mesh(box_geometry, sp_material);
 
-// position mesh
-box_mesh.position.set(2,2,-2); // shorthand
-/* box_mesh.position.x = -2; box_mesh.position.y = 2; box_mesh.position.z = 2; */
-
-// rotate mesh
-box_mesh.rotation.set(45,0,0)
-
 // add light
 var light = new THREE.PointLight(0XFFFFFF, 1.75, 500);
 light.position.set(10,0,25) // set light x,y,z cordinates
@@ -50,5 +43,8 @@ scene.add(box_mesh, light);
 var render = function() {
     requestAnimationFrame(render); // casuses the renderer to draw the scene everytime the screen refreshes at 60hz
     renderer.render(scene,camera);
+
+    box_mesh.rotation.x += 0.05; // 60hz
+    box_mesh.scale.x += 0.001;
 }
 render();
