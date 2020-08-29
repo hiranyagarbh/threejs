@@ -1,4 +1,7 @@
-import * as THREE from './three.module.js';
+import * as THREE from './three/build/three.module.js';
+import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
+import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
 
 var learn = function() {
 
