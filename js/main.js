@@ -3,6 +3,59 @@ import { EffectComposer } from './three/examples/jsm/postprocessing/EffectCompos
 import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
 import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
 
+var camera, scene, renderer;
+var composer;
+var glitchPass;
+
+init();
+animate();
+
+function init() {
+
+    renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setPixelRatio(window.devicePixelRatio); // for high DPI device
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor('#000000');
+    document.body.appendChild(renderer.domElement);
+
+    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera.position.z = 400;
+
+    scene = new THREE.Scene();
+
+    var texture = new THREE.TextureLoader().load('../logo.png');
+    var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
+    var material = new THREE.MeshBasicMaterial({ map: texture });
+
+    var mesh = new THREE.Mesh( geometry, material );
+    scene.add( mesh );
+
+    // postprocessing
+    composer = new EffectComposer(renderer);
+    composer.addPass( new RenderPass(scene, camera) );
+
+    glitchPass = new GlitchPass();
+    composer.addPass( glitchPass );
+
+
+    // responsive
+    window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth,window.innerHeight); // set to window dims
+        camera.aspect = window.innerWidth / window.innerHeight; // readjust the aspect ratio
+
+        camera.updateProjectionMatrix();
+    })
+
+}
+
+function animate() {
+    requestAnimationFrame( animate );
+    composer.render();
+
+}
+
+
+
 var learn = function() {
 
     // scene instance
@@ -56,5 +109,3 @@ var learn = function() {
     }
     render();
 }
-
-learn();
