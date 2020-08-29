@@ -1,50 +1,57 @@
-// scene instance
-var scene = new THREE.Scene();
+import * as THREE from './three.module.js';
 
-// camera instance - FOV, Aspect Ratio, near plane, far plane
-var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-camera.position.z = 5;
+var learn = function() {
 
-// renderer (webgl,css2d,css3d,svg)
-var renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setClearColor("#e5e5e5"); // set basic bg color
-renderer.setSize(window.innerWidth,window.innerHeight);
+    // scene instance
+    var scene = new THREE.Scene();
 
-// append child to renderer DOM element - create canvar with renderer settings
-document.body.appendChild(renderer.domElement);
+    // camera instance - FOV, Aspect Ratio, near plane, far plane
+    var camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+    camera.position.z = 5;
 
-// responsive
-window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth,window.innerHeight); // set to window dims
-    camera.aspect = window.innerWidth / window.innerHeight; // readjust the aspect ratio
+    // renderer (webgl,css2d,css3d,svg)
+    var renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer.setClearColor("#e5e5e5"); // set basic bg color
+    renderer.setSize(window.innerWidth,window.innerHeight);
 
-    camera.updateProjectionMatrix();
-})
+    // append child to renderer DOM element - create canvar with renderer settings
+    document.body.appendChild(renderer.domElement);
 
-// add sphere
-// def shape and material
+    // responsive
+    window.addEventListener('resize', () => {
+        renderer.setSize(window.innerWidth,window.innerHeight); // set to window dims
+        camera.aspect = window.innerWidth / window.innerHeight; // readjust the aspect ratio
 
-var sphere_geometry = new THREE.SphereGeometry(1,50,50); // shape
-var sp_material = new THREE.MeshLambertMaterial({color: 0x266CAA}); // material
-var sp_mesh = new THREE.Mesh(sphere_geometry, sp_material); // shape + material
+        camera.updateProjectionMatrix();
+    })
 
-// add box
-var box_geometry = new THREE.BoxGeometry(1,1,1);
-var box_mesh = new THREE.Mesh(box_geometry, sp_material);
+    // add sphere
+    // def shape and material
 
-// add light
-var light = new THREE.PointLight(0XFFFFFF, 1.75, 500);
-light.position.set(10,0,25) // set light x,y,z cordinates
+    var sphere_geometry = new THREE.SphereGeometry(1,50,50); // shape
+    var sp_material = new THREE.MeshLambertMaterial({color: 0x266CAA}); // material
+    var sp_mesh = new THREE.Mesh(sphere_geometry, sp_material); // shape + material
 
-// add mesh and light to the scene
-scene.add(box_mesh, light);
+    // add box
+    var box_geometry = new THREE.BoxGeometry(1,1,1);
+    var box_mesh = new THREE.Mesh(box_geometry, sp_material);
 
-// render funct on scene and camera
-var render = function() {
-    requestAnimationFrame(render); // casuses the renderer to draw the scene everytime the screen refreshes at 60hz
-    renderer.render(scene,camera);
+    // add light
+    var light = new THREE.PointLight(0XFFFFFF, 1.75, 500);
+    light.position.set(10,0,25) // set light x,y,z cordinates
 
-    box_mesh.rotation.x += 0.05; // 60hz
-    box_mesh.scale.x += 0.001;
+    // add mesh and light to the scene
+    scene.add(box_mesh, light);
+
+    // render funct on scene and camera
+    var render = function() {
+        requestAnimationFrame(render); // casuses the renderer to draw the scene everytime the screen refreshes at 60hz
+        renderer.render(scene,camera);
+
+        //box_mesh.rotation.x += 0.05;
+        //box_mesh.scale.x += 0.001;
+    }
+    render();
 }
-render();
+
+learn();
