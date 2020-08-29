@@ -12,23 +12,29 @@ animate();
 
 function init() {
 
-    renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setPixelRatio(window.devicePixelRatio); // for high DPI device
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor('#000000');
-    document.body.appendChild(renderer.domElement);
+    //scene
+    scene = new THREE.Scene();
 
+    // camera
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.z = 400;
 
-    scene = new THREE.Scene();
+    // renderer
+    renderer = new THREE.WebGLRenderer({antialias: true});  /* antialias to eliminate img tearing */
+    renderer.setPixelRatio(window.devicePixelRatio);        // for high DPI device
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor('#000');
+    document.body.appendChild(renderer.domElement);
 
+    
+    // object
     var texture = new THREE.TextureLoader().load('../logo.png');
-    var geometry = new THREE.BoxBufferGeometry(200, 200, 200);
-    var material = new THREE.MeshBasicMaterial({ map: texture });
 
-    var mesh = new THREE.Mesh( geometry, material );
-    scene.add( mesh );
+    var geometry = new THREE.PlaneBufferGeometry( 150, 50 );                            // plane
+    var material = new THREE.MeshBasicMaterial({ map: texture, transparent: true});     // material == texture == img
+    var mesh = new THREE.Mesh(geometry, material);                                      // mesh = geometry + material
+    
+    scene.add(mesh);
 
     // postprocessing
     composer = new EffectComposer(renderer);
@@ -38,23 +44,27 @@ function init() {
     composer.addPass( glitchPass );
 
 
-    // responsive
+    // make it responsive
     window.addEventListener('resize', () => {
-        renderer.setSize(window.innerWidth,window.innerHeight); // set to window dims
+        renderer.setSize(window.innerWidth,window.innerHeight); // set to window dimensions
         camera.aspect = window.innerWidth / window.innerHeight; // readjust the aspect ratio
 
-        camera.updateProjectionMatrix();
+        camera.updateProjectionMatrix();                        // keep updating
     })
 
 }
 
 function animate() {
-    requestAnimationFrame( animate );
+    requestAnimationFrame(animate);
     composer.render();
 
 }
 
+/* ============= [ END ] ============= */
 
+/* ==========================
+    below is my learning function - may be ignored
+========================== */
 
 var learn = function() {
 
