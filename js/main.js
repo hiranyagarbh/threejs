@@ -1,4 +1,5 @@
 // documentation - https://threejs.org/docs/
+// tweenmax for animation - https://greensock.com/tweenmax/
 
 import * as THREE from './three/build/three.module.js';
 import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
