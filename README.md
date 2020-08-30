@@ -1,5 +1,5 @@
 # threejs
-> playing with threejs - loading page
+> playing with threejs - preloader
 
 # Components
 > From JavaScript 3D library - https://threejs.org/
